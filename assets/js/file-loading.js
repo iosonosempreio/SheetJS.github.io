@@ -61,3 +61,8 @@ DropSheet({
         foo: 'bar'
     }
 })
+
+// load sample
+d3.select('#load-sample').on('click',function(d){
+    console.log('load sample, need to write this code');
+})
