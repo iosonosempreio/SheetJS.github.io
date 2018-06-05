@@ -10,8 +10,8 @@ html {
   border-radius:5px;
   padding:25px;
   text-align:center;
-  width:128px;
-  font:20pt bold,"Vollkorn";color:#bbb
+  width:100%;
+  color:#bbb
 }
 
 #left {
