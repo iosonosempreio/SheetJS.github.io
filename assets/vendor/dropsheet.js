@@ -44,7 +44,8 @@ var DropSheet = function DropSheet(opts) {
         case 'xlsx':
           pending = false;
           opts.on.workend();
-          cb(JSON.parse(e.data.d)); break;
+          cb(JSON.parse(e.data.d));
+          break;
       }
     };
     worker.postMessage({d:data,b:readtype,t:'xlsx'});
@@ -66,10 +67,15 @@ var DropSheet = function DropSheet(opts) {
 
   function process_wb(wb, sheetidx) {
     last_wb = wb;
-    opts.on.wb(wb, sheetidx);
-    var sheet = wb.SheetNames[sheetidx||0];
-    var json = to_json(wb)[sheet];
-    opts.on.sheet(json, wb.SheetNames, choose_sheet);
+
+    //edited here
+    // opts.on.wb(wb, sheetidx);
+    opts.on.wb(to_json(wb));
+
+    // Those skipped
+    // var sheet = wb.SheetNames[sheetidx||0];
+    // var json = to_json(wb)[sheet];
+    // opts.on.sheet(json, wb.SheetNames, choose_sheet);
   }
 
   function handleDrop(e) {
@@ -80,6 +86,7 @@ var DropSheet = function DropSheet(opts) {
     var i,f;
     for (i = 0, f = files[i]; i != files.length; ++i) {
       var reader = new FileReader();
+      console.log(f.name)
       var name = f.name;
       reader.onload = function(e) {
         var data = e.target.result;

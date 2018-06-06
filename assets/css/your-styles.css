@@ -12,3 +12,8 @@ html {
   width:100%;
   color:#bbb
 }
+
+#load-sample {
+	text-decoration: underline;
+	cursor: pointer;
+}

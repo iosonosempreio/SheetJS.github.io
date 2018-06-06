@@ -6,6 +6,8 @@
 var _target = document.getElementById('drop');
 var _file = document.getElementById('file');
 
+var project_data;
+
 /** Spinner **/
 var spinner;
 
@@ -30,18 +32,10 @@ var _failed = function(e) {
     console.warn('We unfortunately dropped the ball here.  Please test the file using the <a href="/js-xlsx/">raw parser</a>.  If there are issues with the file processor, please send this file to <a href="mailto:dev@sheetjs.com?subject=I+broke+your+stuff">dev@sheetjs.com</a> so we can make things right.');
 };
 
-var _onsheet = function(json, sheetnames, select_sheet_cb) {
-
-    /* set up table headers */
-    var L = 0;
-    json.forEach(function(r) { if (L < r.length) L = r.length; });
-
-    for (var i = json[0].length; i < L; ++i) {
-        json[0][i] = "";
-    }
-
-    console.log(json)
-};
+function _wb(parsed_xlsx) {
+    project_data = parsed_xlsx;
+    console.log(project_data);
+}
 
 /** Drop it like it's hot **/
 DropSheet({
@@ -50,7 +44,7 @@ DropSheet({
     on: {
         workstart: _workstart,
         workend: _workend,
-        sheet: _onsheet,
+        wb: _wb,
         foo: 'bar'
     },
     errors: {
@@ -63,6 +57,29 @@ DropSheet({
 })
 
 // load sample
-d3.select('#load-sample').on('click',function(d){
+d3.select('#load-sample').on('click', function(d) {
     console.log('load sample, need to write this code');
+
+    var url = "assets/samples/data.xlsx";
+
+    /* set up async GET request */
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.responseType = "arraybuffer";
+
+    req.onload = function(e) {
+        var data = new Uint8Array(req.response);
+        var workbook = XLSX.read(data, { type: "array" });
+
+        var result = {};
+        workbook.SheetNames.forEach(function(sheetName) {
+            var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+            if (roa.length > 0) result[sheetName] = roa;
+        });
+        project_data = result;
+        console.log(project_data);
+    }
+
+    req.send();
+
 })
