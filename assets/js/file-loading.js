@@ -23,7 +23,7 @@ var _pending = function() {
     console.warn('Please wait until the current file is processed.', function() {});
 };
 
-var _large = function(len, cb) {
+var _large = function(len) {
     console.warn("This file is " + len + " bytes and may take a few moments.  Your browser may lock up during this process.");
 };
 

@@ -86,7 +86,6 @@ var DropSheet = function DropSheet(opts) {
     var i,f;
     for (i = 0, f = files[i]; i != files.length; ++i) {
       var reader = new FileReader();
-      console.log(f.name)
       var name = f.name;
       reader.onload = function(e) {
         var data = e.target.result;
@@ -104,8 +103,15 @@ var DropSheet = function DropSheet(opts) {
           } catch(e) { console.log(e); opts.errors.failed(e); }
         }
 
-        if(e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
-        else { doit(); }
+        // if(e.target.result.length > 1e6) {
+        //   // opts.errors.large(e.target.result.length, function(e) {
+        //   //   if(e) doit(); 
+        //   // });
+        //   opts.errors.large(e.target.result.length);
+        // }
+        // else { doit(); }
+
+        doit();
       };
       if(rABS) reader.readAsBinaryString(f);
       else reader.readAsArrayBuffer(f);
@@ -147,8 +153,15 @@ var DropSheet = function DropSheet(opts) {
           } catch(e) { console.log(e); opts.errors.failed(e); }
         }
 
-        if(e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
-        else { doit(); }
+        // if(e.target.result.length > 1e6) {
+        //   // opts.errors.large(e.target.result.length, function(e) {
+        //   //   if(e) doit(); 
+        //   // });
+        //   opts.errors.large(e.target.result.length);
+        // }
+        // else { doit(); }
+
+        doit();
       };
       if(rABS) reader.readAsBinaryString(f);
       else reader.readAsArrayBuffer(f);
