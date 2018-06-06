@@ -58,7 +58,6 @@ d3.select('#load-sample').on('click', function(d) {
     console.info('loading sample data...');
 
     var url = "assets/samples/data.xlsx";
-    url = "assets/samples/OLDENBURG_AUBREY_WALLIS_LISTER.xlsx";
 
     /* set up async GET request */
     var req = new XMLHttpRequest();
