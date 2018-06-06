@@ -6,8 +6,6 @@
 var _target = document.getElementById('drop');
 var _file = document.getElementById('file');
 
-var project_data;
-
 /** Spinner **/
 var spinner;
 
@@ -33,8 +31,7 @@ var _failed = function(e) {
 };
 
 function _wb(parsed_xlsx) {
-    project_data = parsed_xlsx;
-    console.log(project_data);
+    loadedData(parsed_xlsx);
 }
 
 /** Drop it like it's hot **/
@@ -58,9 +55,10 @@ DropSheet({
 
 // load sample
 d3.select('#load-sample').on('click', function(d) {
-    console.log('load sample, need to write this code');
+    console.info('loading sample data...');
 
     var url = "assets/samples/data.xlsx";
+    url = "assets/samples/OLDENBURG_AUBREY_WALLIS_LISTER.xlsx";
 
     /* set up async GET request */
     var req = new XMLHttpRequest();
@@ -76,10 +74,11 @@ d3.select('#load-sample').on('click', function(d) {
             var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
             if (roa.length > 0) result[sheetName] = roa;
         });
-        project_data = result;
-        console.log(project_data);
+        _workend();
+        loadedData(result);
     }
 
+    _workstart();
     req.send();
 
 })
